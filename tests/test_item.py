@@ -29,3 +29,22 @@ def test_class_attributes(setup_items):
     assert Item.pay_rate == 0.8
     assert item1 in Item.all
     assert item2 in Item.all
+
+
+def test_name_property():
+    item = Item("Смартфон", 10000, 20)
+    assert item.name == "Смартфон"
+    item.name = "СуперСмартфон"
+    assert item.name == "СуперСмарт"  # Проверяем обрезку имени до 10 символов
+
+
+def test_instantiate_from_csv():
+    Item.all.clear()  # Очищаем список перед тестом
+    Item.instantiate_from_csv('src/items.csv')
+    assert len(Item.all) == 5  # В файле 5 записей
+
+
+def test_string_to_number():
+    assert Item.string_to_number('5') == 5
+    assert Item.string_to_number('5.0') == 5
+    assert Item.string_to_number('5.5') == 5
