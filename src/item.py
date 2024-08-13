@@ -53,14 +53,11 @@ class Item:
 
     @classmethod
     def instantiate_from_csv(cls, file_path: str) -> None:
-        """
-        Класс-метод, инициализирующий экземпляры класса Item данными из файла CSV.
-
-        :param file_path: Путь к файлу CSV.
-        """
+        cls.all.clear()  # Очищаем список перед созданием новых объектов
         with open(file_path, 'r', encoding='cp1251') as file:  # Задаем кодировку cp1251
             reader = csv.DictReader(file)
-            for row in reader:
+            rows = list(reader)
+            for row in rows:
                 cls(
                     name=row['name'],
                     price=float(row['price']),
